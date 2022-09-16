@@ -31,7 +31,13 @@ jobs:
       run: dotnet build --configuration Release --no-restore
     - name: Test a project
       run: dotnet test --no-restore --verbosity normal
-      
-
-        
-
+    - name: Publish
+      run: |
+        dotnet publish -c Release
+      shell: bash
+    - name: Azure Functions Action
+      uses: Azure/functions-action@v1.4.7
+      with:
+        app-name: workshop-function-10
+        package: src/HelloWorld
+        publish-profile: ${{ secrets.AZURE_CREDENTIAL_CAESAR }}
