@@ -7,10 +7,6 @@ on:
       - main
   workflow_dispatch:  
 
- # Configureer triggers voor een push op de main branch
- # Configureer triggers voor een pull request
- # Configureer een trigger voor een handmatige build
-
 jobs:
   build:
 
@@ -22,18 +18,13 @@ jobs:
     defaults:
       run:
         working-directory: ${{env.WORKDIR}}
-    strategy:
-      matrix:
-        dotnet-version: ['6.0']
 
     steps:
     - uses: actions/checkout@v3
-    - name: "Checkout"
-      uses: actions/setup-dotnet@v2
+    - name: Setup .NET Core SDK
+      uses: actions/setup-dotnet@v2.1.0
       with:
-        dotnet-version: ${{ matrix.dotnet-version }}
-    - name: Setup .NET
-      run: dotnet restore
+        dotnet-version: 6.0
 
     - name: Build a project
       run: dotnet build --configuration Release --no-restore
