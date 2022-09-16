@@ -1,4 +1,4 @@
-name: .NET
+name: .NET build and test
 
 on:
   pull_request:
@@ -12,7 +12,7 @@ jobs:
 
     runs-on: ubuntu-latest
     env:
-      WORKDIR: "../src"
+      WORKDIR: "src"
       CONFIG: "TODO"
       AZURE_FUNCTIONAPP_NAME: "Func10-Hello-World"
     defaults:
