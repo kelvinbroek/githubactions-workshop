@@ -1,6 +1,12 @@
 name: .NET
 
 on:
+  pull_request:
+  push:
+    branches:
+      - main
+  
+
  # Configureer triggers voor een push op de main branch
  # Configureer triggers voor een pull request
  # Configureer een trigger voor een handmatige build
@@ -10,19 +16,34 @@ jobs:
 
     runs-on: ubuntu-latest
     env:
-      WORKDIR: "TODO"
+      WORKDIR: "../src"
       CONFIG: "TODO"
-      AZURE_FUNCTIONAPP_NAME: "TODO"
+      AZURE_FUNCTIONAPP_NAME: "Func10-Hello-World"
     defaults:
       run:
         working-directory: ${{env.WORKDIR}}
+    strategy:
+      matrix:
+        dotnet-version: ['6.0']
 
     steps:
+    - uses: actions/checkout@v3
     - name: "Checkout"
-
+      uses: actions/setup-dotnet@v2
+      with:
+        dotnet-version: ${{ matrix.dotnet-version }}
     - name: Setup .NET
+      run: dotnet restore
 
-    - name: Build and Test a project
-
+    - name: Build a project
+      run: dotnet build --configuration Release --no-restore
+    - name: Test a project
+      run: dotnet test --no-restore --verbosity normal
     - name: 'Run Azure Functions Action'
+
+    - name: Azure Functions Action
+      uses: Azure/functions-action@v1.4.7
+      
+
+        
 
