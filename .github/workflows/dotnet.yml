@@ -5,7 +5,7 @@ on:
   push:
     branches:
       - main
-  
+  workflow_dispatch:  
 
  # Configureer triggers voor een push op de main branch
  # Configureer triggers voor een pull request
